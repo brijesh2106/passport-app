@@ -1,0 +1,140 @@
+<!-- home.page.html-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Passport Application</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="centered-header">
+    GOVERNMENT OF INDIA, MINISTRY OF EXTERNAL AFFAIRS
+    <br>
+    PASSPORT APPLICATION FORM
+  </div>
+  <div class="instructions">
+    <p>
+      Please read the Passport Instruction Booklet carefully before filling the form. Fill this form in CAPITAL LETTERS. Furnishing of incorrect information/suppression of information would lead to rejection of the application and would attract penal provisions as prescribed under the Passports Act, 1967. Please produce your original documents at the time of submission of the form.
+    </p>
+  </div>
+
+  <ion-list lines="full" class="form-list">
+    <!-- Applying for -->
+    <ion-item>
+      <ion-label class="underline-label">(1).SERVICE REQUIRED</ion-label>
+    </ion-item>
+    
+
+    <ion-item>
+      <ion-label>1.1 Applying for</ion-label>
+      <ion-select placeholder="Select Application Type" interface="popover" [(ngModel)]="applicationType" (ionChange)="checkReissueStatus()">
+        <ion-select-option value="fresh">Fresh Passport</ion-select-option>
+        <ion-select-option value="reissue">Re-issue of Passport</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Re-issue reasons, shown only if 'Re-issue of Passport' is selected -->
+    <ion-item *ngIf="displayReissueOptions">
+      <ion-label>1.2 If re-issue, specify reason(s)</ion-label>
+      <ion-select placeholder="Specify Reason" interface="popover" [(ngModel)]="reissueReason">
+        <ion-select-option value="expired3">Validity Expired within 3 years/Due to Expire</ion-select-option>
+        <ion-select-option value="pages">Exhaustion of Pages</ion-select-option>
+        <ion-select-option value="expiredMore3">Validity Expired more than 3 years ago</ion-select-option>
+        <ion-select-option value="lost">Lost Passport</ion-select-option>
+        <ion-select-option value="changeParticulars">Change in Existing Personal Particulars</ion-select-option>
+        <ion-select-option value="damaged">Damaged Passport</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Change in personal particulars, shown only if 'Re-issue of Passport' is selected -->
+    <ion-item *ngIf="displayReissueOptions">
+      <ion-label>1.3 If change in existing personal particulars, specify reason(s)</ion-label>
+      <ion-select placeholder="Specify Changes" interface="popover" [(ngModel)]="changeParticularsReason">
+        <ion-select-option value="appearance">Appearance</ion-select-option>
+        <ion-select-option value="signature">Signature</ion-select-option>
+        <ion-select-option value="givenName">Given Name</ion-select-option>
+        <ion-select-option value="surname">Surname</ion-select-option>
+        <ion-select-option value="dob">Date of Birth</ion-select-option>
+        <ion-select-option value="spouseName">Spouse Name</ion-select-option>
+        <ion-select-option value="address">Address</ion-select-option>
+        <ion-select-option value="deleteECR">Delete ECR</ion-select-option>
+        <ion-select-option value="others">Others, Please specify</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  
+<!-- Photo Upload Section -->
+  <div class="upload-section photo-upload">
+    <ion-label>Upload your photo:</ion-label>
+    <input type="file" (change)="validateAndUploadFile($event, 'photo')" accept=".jpg, .jpeg, .png">
+    <p>* Please upload your unsigned recent colour Passport size photograph with white background. Upload Max. Filesize – 2MB. Upload Only .JPG, .JPEG and .PNG Format.</p>
+    <!-- Display photo file name -->
+    <p *ngIf="photoFileName">Selected file: {{ photoFileName }}</p>
+  </div>
+
+<!-- Signature Upload Section -->
+  <div class="upload-section signature-upload">
+    <ion-label>Upload your signature or thumb impression:</ion-label>
+    <input type="file" (change)="validateAndUploadFile($event, 'signature')" accept=".jpg, .jpeg, .png">
+    <p>* Please upload scanned Signature/ Left Hand Thumb Impression photograph of Illiterate Applicant and Minors who cannot sign. Upload Max. Filesize – 2MB. Upload Only .JPG, .JPEG and .PNG Format.</p>
+    <!-- Display signature file name -->
+    <p *ngIf="signatureFileName">Selected file: {{ signatureFileName }}</p>
+  </div>
+
+  <ion-item>
+    <ion-label>1.4 Type of Application</ion-label>
+    <ion-select placeholder="Select Type of Application" interface="popover" [(ngModel)]="typeOfApplication">
+      <ion-select-option value="normal">Normal</ion-select-option>
+      <ion-select-option value="tatkaal">Tatkaal</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>1.5 Type of Passport Booklet</ion-label>
+    <ion-select placeholder="Select Passport Booklet Type" interface="popover" [(ngModel)]="passportBookletType">
+      <ion-select-option value="36">36 Pages</ion-select-option>
+      <ion-select-option value="60">60 Pages</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>1.6 Validity Required (For minors between 15 and 18 years)</ion-label>
+    <ion-select placeholder="Select Validity" interface="popover" [(ngModel)]="validityRequired">
+      <ion-select-option value="10years">10 Years</ion-select-option>
+      <ion-select-option value="uptoAge18">Up to age 18</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="underline-label">(2).APPLICANT DETAILS</ion-label>
+  </ion-item>
+
+<div class="given-name">
+  <ion-label>2.1 Applicant's Name</ion-label>
+  <input type="text" placeholder="Enter Full Name" [(ngModel)]="givenName" maxlength="90" pattern="[A-Z ]*" title="Only uppercase letters and spaces are allowed">
+  <p>* Initials are not allowed.</p>
+</div>
+
+<ion-item>
+  <ion-label>2.2 Are you known by any other names (aliases)</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="knownByOtherNames">
+    <ion-select-option value="yes">Yes</ion-select-option>
+    <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label>2.3 Have you ever changed your name?</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="nameChanged">
+    <ion-select-option value="yes">Yes</ion-select-option>
+    <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label class="underline-label">(3).FAMILY DETAILS</ion-label>
+</ion-item>
+
+  </ion-list>
+  
+</ion-content>
+
