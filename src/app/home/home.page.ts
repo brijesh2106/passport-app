@@ -16,11 +16,62 @@ export class HomePage {
   typeOfApplication: string = '';
   passportBookletType: string = '';
   validityRequired: string = '';
-  givenName: string = '';
+  applicantGivenName: string = ''; // Updated from givenName
+  applicantSurname: string = ''; // Updated from surname
   knownByOtherNames: string = '';
   nameChanged: string = '';
   photoFileName: string = '';
   signatureFileName: string = '';
+  dateOfBirth: string = ''; // Default value assigned
+  today: Date = new Date(); // Get today's date
+  placeOfBirth: string = '';
+  district: string = '';
+  state: string = '';
+  region: string = '';
+  gender: string = '';
+  maritalStatus: string = '';
+  citizenship: string = '';
+  pan: string = '';
+  voterId: string = '';
+  employmentType: string = '';
+  organizationName: string = '';
+  showOrganizationField: boolean = false;
+  familyGovernmentServant: string = '';
+  educationalQualification: string = '';
+  nonEcrStatus: string = '';
+  distinguishingMark: string = '';
+  aadhaarNumber: string = '';
+  fathersGivenName: string = '';
+  fathersSurname: string = '';
+  mothersGivenName: string = '';
+  mothersSurname: string = '';
+  legalGuardiansGivenName: string = '';
+  legalGuardiansSurname: string = '';
+  spousesGivenName: string = '';
+  spousesSurname: string = '';
+  filePassportNumber: string = '';
+  fathersnationality: string = '';
+  mothersFilePassportNumber: string = '';
+  mothersNationality: string = '';
+  houseStreet: string = '';
+  villageTownCity: string = '';
+  residentialDistrict: string = '';
+  policeStation: string = '';
+  stateUT: string = '';
+  pin: string = '';
+  mobileNumber: string = '';
+  telephoneNumber: string = '';
+  emailID: string = '';
+  permanentSameAsPresent: string = '';
+  emergencyAddressDifferent: string = '';
+  emergencyNameAddress: string = '';
+  emergencyMobileNumber: string = '';
+  emergencyTelephoneNumber: string = '';
+  emergencyEmailId: string = '';
+
+  
+
+
 
   constructor(private toastController: ToastController) {}
 

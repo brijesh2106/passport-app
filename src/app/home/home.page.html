@@ -108,9 +108,24 @@
     <ion-label class="underline-label">(2).APPLICANT DETAILS</ion-label>
   </ion-item>
 
-<div class="given-name">
-  <ion-label>2.1 Applicant's Name</ion-label>
-  <input type="text" placeholder="Enter Full Name" [(ngModel)]="givenName" maxlength="90" pattern="[A-Z ]*" title="Only uppercase letters and spaces are allowed">
+<!-- Existing Code for Given Name with Validation Feedback -->
+<div class="form-item">
+  <ion-label>2.1 Applicant's Given Name</ion-label>
+  <input type="text" placeholder="Enter Applicant's Given Name" [(ngModel)]="applicantGivenName" name="applicantGivenName" #applicantGivenNameCtrl="ngModel"
+    maxlength="45" pattern="[A-Z ]*" required title="Only uppercase letters and spaces are allowed">
+  <p *ngIf="applicantGivenNameCtrl.errors && applicantGivenNameCtrl.dirty" class="validation-error">
+    * Invalid Applicant's Given Name. Only uppercase letters and spaces are allowed. Maximum 45 characters.
+  </p>
+  <p>*  (Given Name means First name followed by Middle name (If any)) (Initials are not allowed.)</p>
+</div>
+
+<div class="form-item">
+  <ion-label>2.1.1 Applicant's Surname</ion-label>
+  <input type="text" placeholder="Enter Applicant's Surname" [(ngModel)]="applicantSurname" name="applicantSurname" #applicantSurnameCtrl="ngModel"
+    maxlength="45" pattern="[A-Z ]*" required title="Only uppercase letters and spaces are allowed">
+  <p *ngIf="applicantSurnameCtrl.errors && applicantSurnameCtrl.dirty" class="validation-error">
+    * Invalid Applicant's Surname. Only uppercase letters and spaces are allowed. Maximum 45 characters.
+  </p>
   <p>* Initials are not allowed.</p>
 </div>
 
@@ -131,8 +146,476 @@
 </ion-item>
 
 <ion-item>
+  <ion-label position="floating">2.4 Date of Birth (DD-MM-YYYY)</ion-label>
+  <ion-datetime display-format="DD-MM-YYYY" max="{{ today | date:'yyyy-MM-dd' }}" [(ngModel)]="dateOfBirth"></ion-datetime>
+</ion-item>
+
+<div class="form-item">
+  <ion-label>2.5 Place of Birth (Village/Town/City)</ion-label>
+  <input type="text" placeholder="Enter Place of Birth" [(ngModel)]="placeOfBirth" name="placeOfBirth" #placeOfBirthCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="26">
+  <p *ngIf="placeOfBirthCtrl.errors && placeOfBirthCtrl.dirty" class="validation-error">
+    * Invalid Place of Birth. Only uppercase letters are allowed. Maximum 26 characters.
+  </p>
+  <p>* (Place of Birth should only contain the name of Village/Town/City in uppercase letters)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="district">2.5.1 District (If born in India)</ion-label>
+  <input type="text" placeholder="Enter District Name" [(ngModel)]="district" name="district" #districtCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="26">
+  <p *ngIf="districtCtrl.errors && districtCtrl.dirty" class="validation-error">
+    * Invalid District Name. Only uppercase letters are allowed. Maximum 26 characters.
+  </p>
+  <p>* (District Name should only contain uppercase letters)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="state">2.5.2 State/UT (If born in India)</ion-label>
+  <input type="text" placeholder="Enter State or UT" id="state" [(ngModel)]="state" name="state" #stateCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="26">
+  <p *ngIf="stateCtrl.errors && stateCtrl.dirty" class="validation-error">
+    * Invalid State/UT. Only uppercase letters are allowed. Maximum 26 characters.
+  </p>
+  <p>* (State/UT name should only contain uppercase letters)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="region">2.5.3 Region/Country (If born abroad) If born before 15/08/1947 in a place now in Pakistan or
+    Bangladesh, write "Undivided India"</ion-label>
+  <input type="text" placeholder="Enter Region or Country" id="region" [(ngModel)]="region" name="region" #regionCtrl="ngModel"
+         required pattern="[A-Z ]*" maxlength="26">
+  <p *ngIf="regionCtrl.errors && regionCtrl.dirty" class="validation-error">
+    * Invalid Region/Country. Only uppercase letters and spaces are allowed. Maximum 26 characters.
+  </p>
+  <p>* (Enter the name of the Region or Country using uppercase letters. Include spaces if necessary.)</p>
+</div>
+
+
+<ion-item>
+  <ion-label>2.6 Gender</ion-label>
+  <ion-select placeholder="Select Gender" interface="popover" [(ngModel)]="gender">
+    <ion-select-option value="male">Male</ion-select-option>
+    <ion-select-option value="female">Female</ion-select-option>
+    <ion-select-option value="transgender">Transgender</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label>2.7 Marital Status</ion-label>
+  <ion-select placeholder="Select Marital Status" interface="popover" [(ngModel)]="maritalStatus">
+    <ion-select-option value="single">Single</ion-select-option>
+    <ion-select-option value="married">Married</ion-select-option>
+    <ion-select-option value="divorced">Divorced</ion-select-option>
+    <ion-select-option value="widow">Widow/Widower</ion-select-option>
+    <ion-select-option value="separated">Separated</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label>2.8 Citizenship of India by</ion-label>
+  <ion-select placeholder="Select Citizenship Type" interface="popover" [(ngModel)]="citizenship">
+    <ion-select-option value="birth">Birth</ion-select-option>
+    <ion-select-option value="descent">Descent</ion-select-option>
+    <ion-select-option value="registration">Registration/Naturalization</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<div class="form-item">
+  <ion-label for="pan">2.9 PAN (If available)</ion-label>
+  <input type="text" id="pan" name="pan" [(ngModel)]="pan" #panCtrl="ngModel" required 
+         pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" placeholder="Enter your PAN" 
+         title="Enter a valid PAN (e.g., ABCDE1234F)">
+  <p *ngIf="panCtrl.errors && panCtrl.dirty" class="validation-error">
+    * Invalid PAN. A valid PAN format is ABCDE1234F (5 uppercase letters, followed by 4 digits, and ending with 1 uppercase letter).
+  </p>
+  <p>* (PAN must be entered if available. It is used for identification purposes.)</p>
+</div>
+
+
+<div class="form-item">
+  <ion-label for="voterId">Voter ID (If available)</ion-label>
+  <input type="text" id="voterId" name="voterId" [(ngModel)]="voterId" #voterIdCtrl="ngModel" required 
+         pattern="[A-Z]{3}[0-9]{7}" maxlength="10" placeholder="Enter your Voter ID" 
+         title="Enter a valid Voter ID (e.g., ABC1234567)">
+  <p *ngIf="voterIdCtrl.errors && voterIdCtrl.dirty" class="validation-error">
+    * Invalid Voter ID. A valid Voter ID format is ABC1234567 (3 uppercase letters followed by 7 digits).
+  </p>
+  <p>* (Voter ID must be entered if available. It is used for electoral purposes.)</p>
+</div>
+
+
+<ion-item>
+  <ion-label>2.11 Employment Type</ion-label>
+  <ion-select placeholder="Select Employment Type" interface="popover" [(ngModel)]="employmentType" name="employmentType">
+    <ion-select-option value="psu">PSU</ion-select-option>
+    <ion-select-option value="government">Government</ion-select-option>
+    <ion-select-option value="statutoryBody">Statutory Body</ion-select-option>
+    <ion-select-option value="retiredGovernmentServant">Retired Government Servant</ion-select-option>
+    <ion-select-option value="selfEmployed">Self Employed</ion-select-option>
+    <ion-select-option value="private">Private</ion-select-option>
+    <ion-select-option value="homemaker">Homemaker</ion-select-option>
+    <ion-select-option value="notEmployed">Not Employed</ion-select-option>
+    <ion-select-option value="retiredPrivateService">Retired Private Service</ion-select-option>
+    <ion-select-option value="student">Student</ion-select-option>
+    <ion-select-option value="others">Others</ion-select-option>
+    <ion-select-option value="ownersPartnersDirectors">Owners, Partners & Directors of companies which are members of CII, FICCI & ASSOCHAM</ion-select-option> 
+  </ion-select>
+</ion-item>
+
+<!-- Inline Logic for Displaying the Organization Name Field -->
+<div *ngIf="employmentType === 'government' || employmentType === 'statutoryBody' || employmentType === 'psu'" class="form-item">
+  <label for="organizationName">2.12 Specify Organization Name</label>
+  <input type="text" id="organizationName" name="organizationName" [(ngModel)]="organizationName" placeholder="Enter Organization Name" ngModel>
+</div>
+
+<ion-item>
+  <ion-label>2.13 Is either of your parent (in case of minor)/ spouse, a government servant?</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="familyGovernmentServant">
+    <ion-select-option value="yes">Yes</ion-select-option>
+    <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label>2.14 Educational Qualification</ion-label>
+  <ion-select placeholder="Select Educational Qualification" interface="popover" [(ngModel)]="educationalQualification">
+      <ion-select-option value="7thPassOrLess">7th pass or less</ion-select-option>
+      <ion-select-option value="Between8thAnd9th">Between 8th and 9th Standard</ion-select-option>
+      <ion-select-option value="10thPassAndAbove">10th pass and above</ion-select-option>
+      <ion-select-option value="GraduateAndAbove">Graduate and above</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label>2.15 Are you eligible for Non-ECR category?</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="nonEcrStatus">
+      <ion-select-option value="yes">Yes</ion-select-option>
+      <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<div class="form-item">
+  <ion-label for="distinguishingMark">2.16 Visible Distinguishing Mark</ion-label>
+  <input type="text" id="distinguishingMark" name="distinguishingMark" [(ngModel)]="distinguishingMark" #distinguishingMarkCtrl="ngModel"
+         required pattern="[A-Z0-9]*" maxlength="36" placeholder="Enter Visible Distinguishing Mark"
+         title="Enter only capital letters and numbers, up to 36 characters">
+  <p *ngIf="distinguishingMarkCtrl.errors && distinguishingMarkCtrl.dirty" class="validation-error">
+    * Invalid entry. Only uppercase letters and numbers are allowed. Maximum 36 characters.
+  </p>
+  <p>* (Visible Distinguishing Mark refers to any unique marks that can be easily noticed and described)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="aadhaarNumber">2.17 Aadhaar Number</ion-label>
+  <input type="tel" id="aadhaarNumber" name="aadhaarNumber" [(ngModel)]="aadhaarNumber" #aadhaarNumberCtrl="ngModel"
+         required pattern="[0-9]{12}" maxlength="12" inputmode="numeric" placeholder="Enter Aadhaar Number"
+         title="Enter a 12-digit Aadhaar number">
+  <p *ngIf="aadhaarNumberCtrl.errors && aadhaarNumberCtrl.dirty" class="validation-error">
+    * Invalid Aadhaar Number. Only 12 digits are allowed.
+  </p>
+  <p>* (Your Aadhaar Number must be 12 digits long without any spaces or other characters)</p>
+</div>
+
+<ion-item>
   <ion-label class="underline-label">(3).FAMILY DETAILS</ion-label>
 </ion-item>
+
+<div class="form-item">
+  <ion-label for="fathersGivenName">3.1 Father’s Given Name (Given Name means First name followed by Middle name (If any)) (Initials not allowed)</ion-label>
+  <input type="text" id="fathersGivenName" placeholder="Enter Father's Given Name" [(ngModel)]="fathersGivenName" name="fathersGivenName" #fathersGivenNameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="fathersGivenNameCtrl.errors && fathersGivenNameCtrl.dirty" class="validation-error">
+    * Invalid Father’s Given Name. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Father’s Given Name should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+
+<div class="form-item">
+  <ion-label for="fathersSurname">3.1.1 Father’s Surname</ion-label>
+  <input type="text" id="fathersSurname" placeholder="Enter Father's Surname" [(ngModel)]="fathersSurname" name="fathersSurname" #fathersSurnameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="fathersSurnameCtrl.errors && fathersSurnameCtrl.dirty" class="validation-error">
+    * Invalid Father’s Surname. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Father’s Surname should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="mothersGivenName">3.2 Mother’s Given Name (Given Name means First name followed by Middle name (If any)) (Initials not allowed)</ion-label>
+  <input type="text" id="mothersGivenName" placeholder="Enter Mother's Given Name" [(ngModel)]="mothersGivenName" name="mothersGivenName" #mothersGivenNameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="mothersGivenNameCtrl.errors && mothersGivenNameCtrl.dirty" class="validation-error">
+    * Invalid Mother’s Given Name. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Mother’s Given Name should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="mothersSurname">3.2.1 Mother’s Surname</ion-label>
+  <input type="text" id="mothersSurname" placeholder="Enter Mother's Surname" [(ngModel)]="mothersSurname" name="mothersSurname" #mothersSurnameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="mothersSurnameCtrl.errors && mothersSurnameCtrl.dirty" class="validation-error">
+    * Invalid Mother’s Surname. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Mother’s Surname should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="legalGuardiansGivenName">3.3 Legal Guardian’s Given Name (Given Name means First name followed by Middle name (If any)) (Initials not allowed)</ion-label>
+  <input type="text" id="legalGuardiansGivenName" placeholder="Enter Legal Guardian's Given Name" [(ngModel)]="legalGuardiansGivenName" name="legalGuardiansGivenName" #legalGuardiansGivenNameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="legalGuardiansGivenNameCtrl.errors && legalGuardiansGivenNameCtrl.dirty" class="validation-error">
+    * Invalid Legal Guardian’s Given Name. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Legal Guardian’s Given Name should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="legalGuardiansSurname">3.3.1 Legal Guardian’s Surname</ion-label>
+  <input type="text" id="legalGuardiansSurname" placeholder="Enter Legal Guardian's Surname" [(ngModel)]="legalGuardiansSurname" name="legalGuardiansSurname" #legalGuardiansSurnameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="legalGuardiansSurnameCtrl.errors && legalGuardiansSurnameCtrl.dirty" class="validation-error">
+    * Invalid Legal Guardian’s Surname. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Legal Guardian’s Surname should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="spousesGivenName">3.4 Spouse’s Given Name (Given Name means First name followed by Middle name (If any)) (Initials not allowed)</ion-label>
+  <input type="text" id="spousesGivenName" placeholder="Enter Spouse's Given Name" [(ngModel)]="spousesGivenName" name="spousesGivenName" #spousesGivenNameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="spousesGivenNameCtrl.errors && spousesGivenNameCtrl.dirty" class="validation-error">
+    * Invalid Spouse’s Given Name. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Spouse’s Given Name should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="spousesSurname">3.4 Spouse’s Surname</ion-label>
+  <input type="text" id="spousesSurname" placeholder="Enter Spouse's Surname" [(ngModel)]="spousesSurname" name="spousesSurname" #spousesSurnameCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="45">
+  <p *ngIf="spousesSurnameCtrl.errors && spousesSurnameCtrl.dirty" class="validation-error">
+    * Invalid Spouse’s Surname. Only uppercase letters are allowed. Maximum 45 characters.
+  </p>
+  <p>* (Spouse’s Surname should only contain uppercase letters, no numbers or special characters allowed) (Initials not allowed)</p>
+</div>
+
+<ion-item>
+  <ion-label class="label-applicantminor">3.5 If applicant is minor, provide following details
+    Parent's Passport Details (If passport has been applied for but not received, give File Number)</ion-label>
+</ion-item>
+
+<div class="form-container" style="display: flex; justify-content: space-between;">
+  <div class="form-item" style="flex: 1; margin-right: 10px;">
+      <ion-label for="filePassportNumber">3.5.1 Father/Legal Guardian's File/Passport Number</ion-label>
+      <input type="text" id="filePassportNumber" placeholder="Enter File/Passport Number" [(ngModel)]="filePassportNumber" name="filePassportNumber" #filePassportNumberCtrl="ngModel"
+             required pattern="[A-Z0-9]*" maxlength="15">
+      <p *ngIf="filePassportNumberCtrl.errors && filePassportNumberCtrl.dirty" class="validation-error">
+          * Invalid Number. Only uppercase letters and numbers are allowed. Maximum 15 characters.
+      </p>
+      <p>* (File/Passport Number should only contain uppercase letters and numbers, no special characters allowed)</p>
+  </div>
+
+  <div class="form-item" style="flex: 1; margin-left: 10px;">
+      <ion-label for="nationality">3.5.2 Father/Legal Guardian's Nationality, if not Indian</ion-label>
+      <input type="text" id="nationality" placeholder="Enter Nationality" [(ngModel)]="fathersnationality" name="nationality" #nationalityCtrl="ngModel"
+             required pattern="[A-Z]*" maxlength="16">
+      <p *ngIf="nationalityCtrl.errors && nationalityCtrl.dirty" class="validation-error">
+          * Invalid Nationality. Only uppercase letters are allowed. Maximum 16 characters.
+      </p>
+      <p>* (Nationality should only contain uppercase letters, no numbers or special characters allowed)</p>
+  </div>
+</div>
+
+<div class="form-container" style="display: flex; justify-content: space-between;">
+  <div class="form-item" style="flex: 1; margin-right: 10px;">
+      <ion-label for="mothersFilePassportNumber">3.5.3 Mother/Legal Guardian's File/Passport Number</ion-label>
+      <input type="text" id="mothersFilePassportNumber" placeholder="Enter File/Passport Number" [(ngModel)]="mothersFilePassportNumber" name="mothersFilePassportNumber" #mothersFilePassportNumberCtrl="ngModel"
+             required pattern="[A-Z0-9]*" maxlength="15">
+      <p *ngIf="mothersFilePassportNumberCtrl.errors && mothersFilePassportNumberCtrl.dirty" class="validation-error">
+          * Invalid Number. Only uppercase letters and numbers are allowed. Maximum 15 characters.
+      </p>
+      <p>* (File/Passport Number should only contain uppercase letters and numbers, no special characters allowed)</p>
+  </div>
+
+  <div class="form-item" style="flex: 1; margin-left: 10px;">
+      <ion-label for="mothersNationality">3.5.4 Mother/Legal Guardian's Nationality, if not Indian</ion-label>
+      <input type="text" id="mothersNationality" placeholder="Enter Nationality" [(ngModel)]="mothersNationality" name="mothersNationality" #mothersNationalityCtrl="ngModel"
+             required pattern="[A-Z]*" maxlength="16">
+      <p *ngIf="mothersNationalityCtrl.errors && mothersNationalityCtrl.dirty" class="validation-error">
+          * Invalid Nationality. Only uppercase letters are allowed. Maximum 16 characters.
+      </p>
+      <p>* (Nationality should only contain uppercase letters, no numbers or special characters allowed)</p>
+  </div>
+</div>
+
+<ion-item>
+  <ion-label class="underline-label">(4).PRESENT RESIDENTIAL ADDRESS DETAILS (Where applicant presently resides)</ion-label>
+</ion-item>
+
+<div class="form-item">
+  <ion-label for="houseStreet">4.1 House No. and Street Name</ion-label>
+  <input type="text" id="houseStreet" placeholder="Enter House No. and Street Name" [(ngModel)]="houseStreet" name="houseStreet" #houseStreetCtrl="ngModel"
+         required pattern="[A-Z0-9 .,-]*" maxlength="36">
+  <p *ngIf="houseStreetCtrl.errors && houseStreetCtrl.dirty" class="validation-error">
+      * Invalid input. Only uppercase letters, numbers, and characters (., -, ) are allowed. Maximum 36 characters.
+  </p>
+  <p>* (House No. and Street Name can include uppercase letters, numbers, periods, commas, and hyphens)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="villageTownCity">4.1.1 Village or Town or City</ion-label>
+  <input type="text" id="villageTownCity" placeholder="Enter Village or Town or City" [(ngModel)]="villageTownCity" name="villageTownCity" #villageTownCityCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="25">
+  <p *ngIf="villageTownCityCtrl.errors && villageTownCityCtrl.dirty" class="validation-error">
+      * Invalid input. Only uppercase letters are allowed. Maximum 25 characters.
+  </p>
+  <p>* (Village or Town or City should only contain uppercase letters, no numbers or special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="district">4.1.2 District</ion-label>
+  <input type="text" id="district" placeholder="Enter District" [(ngModel)]="residentialDistrict" name="district" #districtCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="25">
+  <p *ngIf="districtCtrl.errors && districtCtrl.dirty" class="validation-error">
+      * Invalid input. Only uppercase letters are allowed. Maximum 25 characters.
+  </p>
+  <p>* (District should only contain uppercase letters, no numbers or special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="policeStation">4.1.3 Police Station</ion-label>
+  <input type="text" id="policeStation" placeholder="Enter Police Station" [(ngModel)]="policeStation" name="policeStation" #policeStationCtrl="ngModel"
+         required pattern="[A-Z0-9 ]*" maxlength="25">
+  <p *ngIf="policeStationCtrl.errors && policeStationCtrl.dirty" class="validation-error">
+      * Invalid input. Only uppercase letters, numbers, and spaces allowed. Maximum 25 characters.
+  </p>
+  <p>* (Police Station should only contain uppercase letters, numbers, and spaces; no special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="stateUT">4.1.4 State/ UT</ion-label>
+  <input type="text" id="stateUT" placeholder="Enter State/ UT" [(ngModel)]="stateUT" name="stateUT" #stateUTCtrl="ngModel"
+         required pattern="[A-Z ]*" maxlength="25">
+  <p *ngIf="stateUTCtrl.errors && stateUTCtrl.dirty" class="validation-error">
+      * Invalid State/ UT. Only uppercase letters and spaces are allowed. Maximum 25 characters.
+  </p>
+  <p>* (State/ UT should only contain uppercase letters and spaces, no numbers or special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="pin">4.1.5 PIN</ion-label>
+  <input type="text" id="pin" placeholder="Enter PIN" [(ngModel)]="pin" name="pin" #pinCtrl="ngModel"
+         required pattern="[0-9]*" maxlength="8">
+  <p *ngIf="pinCtrl.errors && pinCtrl.dirty" class="validation-error">
+      * Invalid PIN. Only numbers are allowed. Maximum 8 characters.
+  </p>
+  <p>* (PIN should only contain numbers, no letters or special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="mobileNumber">4.1.6 Mobile Number</ion-label>
+  <input type="tel" id="mobileNumber" placeholder="Enter Mobile Number" [(ngModel)]="mobileNumber" name="mobileNumber" #mobileNumberCtrl="ngModel"
+         required pattern="[0-9]*" maxlength="12">
+  <p *ngIf="mobileNumberCtrl.errors && mobileNumberCtrl.dirty" class="validation-error">
+      * Invalid Mobile Number. Only numbers are allowed. Maximum 12 characters.
+  </p>
+  <p>* (Mobile Number should only contain numbers, no letters or special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="telephoneNumber">4.1.7 Telephone Number</ion-label>
+  <input type="tel" id="telephoneNumber" placeholder="Enter Telephone Number" [(ngModel)]="telephoneNumber" name="telephoneNumber" #telephoneNumberCtrl="ngModel"
+         required pattern="[0-9]*" maxlength="12">
+  <p *ngIf="telephoneNumberCtrl.errors && telephoneNumberCtrl.dirty" class="validation-error">
+      * Invalid Telephone Number. Only numbers are allowed. Maximum 12 characters.
+  </p>
+  <p>* (Telephone Number should only contain numbers, no letters or special characters allowed)</p>
+</div>
+
+<div class="form-item">
+  <ion-label for="emailID">4.1.8 E-mail ID</ion-label>
+  <input type="email" id="emailID" placeholder="Enter E-mail ID" [(ngModel)]="emailID" name="emailID" #emailIDCtrl="ngModel"
+         required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" maxlength="35">
+  <p *ngIf="emailIDCtrl.errors && emailIDCtrl.dirty" class="validation-error">
+      * Invalid E-mail ID. Please enter a valid email address. Maximum 35 characters.
+  </p>
+  <p>* (E-mail ID may contain letters, numbers, and special characters like ._%+-)</p>
+</div>
+
+<ion-item>
+  <ion-label>4.2 Is permanent address the same as present address ?</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="permanentSameAsPresent">
+    <ion-select-option value="yes">Yes</ion-select-option>
+    <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label class="underline-label">(5).EMERGENCY CONTACT DETAILS</ion-label>
+</ion-item>
+
+<ion-item>
+  <ion-label>5.1.1 Is emergency name and address different from Residential Address?</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="emergencyAddressDifferent">
+    <ion-select-option value="yes">Yes</ion-select-option>
+    <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<!-- Conditionally show the next input fields -->
+<div *ngIf="emergencyAddressDifferent === 'yes'">
+
+  <!-- Emergency Name and Address -->
+  <div class="form-item">
+    <ion-label for="emergencyNameAddress">5.1.2 Emergency Name and Address</ion-label>
+    <input type="text" id="emergencyNameAddress" placeholder="Enter Emergency Name and Address" [(ngModel)]="emergencyNameAddress" pattern="[A-Z0-9 !@#$%^&*()_+=]*" maxlength="105">
+    <p *ngIf="emergencyNameAddress.length > 105" class="validation-error">
+      Maximum allowed characters is 105.
+    </p>
+  </div>
+
+  <!-- Emergency Mobile Number -->
+  <div class="form-item">
+    <ion-label for="emergencyMobileNumber">5.1.3 Emergency Mobile Number</ion-label>
+    <input type="tel" id="emergencyMobileNumber" placeholder="Enter Emergency Mobile Number" [(ngModel)]="emergencyMobileNumber" pattern="[0-9]*" maxlength="12">
+    <p *ngIf="emergencyMobileNumber.length > 12" class="validation-error">
+      Maximum allowed digits is 12.
+    </p>
+  </div>
+
+  <!-- Emergency Telephone Number -->
+  <div class="form-item">
+    <ion-label for="emergencyTelephoneNumber">5.1.4 Emergency Telephone Number</ion-label>
+    <input type="tel" id="emergencyTelephoneNumber" placeholder="Enter Emergency Telephone Number" [(ngModel)]="emergencyTelephoneNumber" pattern="[0-9]*" maxlength="12">
+    <p *ngIf="emergencyTelephoneNumber.length > 12" class="validation-error">
+      Maximum allowed digits is 12.
+    </p>
+  </div>
+
+  <!-- Emergency E-mail ID -->
+  <div class="form-item">
+    <ion-label for="emergencyEmailId">5.1.5 Emergency E-mail ID</ion-label>
+    <input type="email" id="emergencyEmailId" placeholder="Enter Emergency E-mail ID" [(ngModel)]="emergencyEmailId" maxlength="35">
+    <p *ngIf="emergencyEmailId.length > 35" class="validation-error">
+      Maximum allowed characters is 35.
+    </p>
+  </div>
+</div>
+
+<ion-item>
+  <ion-label class="underline-label">(6).PREVIOUS PASSPORT/APPLICATION DETAILS</ion-label>
+</ion-item>
+
+
+
+
+
+
+
+
 
   </ion-list>
   

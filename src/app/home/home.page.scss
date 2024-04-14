@@ -111,7 +111,30 @@ input[type="text"] {
   width: 100%; /* Full width */
 }
 
-.given-name {
+.validation-error {
+  color: red;
+  font-size: 12px;
+  font-style: italic; /* Making the text italic */
+  margin-top: 4px; /* Adding some space above the error message */
+  padding: 2px; /* Adding padding around the text */
+  background-color: #ffebeb; /* Light red background */
+  border-left: 3px solid red; /* Solid red line on the left */
+}
+
+
+
+.place-of-birth-section ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 20px;
+}
+
+.validation-error {
+  color: red;
+  font-size: 12px;
+  padding-left: 20px;
+}
+
+.form-item {
   background-color: #f4f4f4; /* Light gray background for visibility */
   border-radius: 8px;        /* Rounded corners */
   padding: 15px;             /* Padding inside the div */
@@ -119,7 +142,7 @@ input[type="text"] {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
 
-.given-name ion-label {
+.form-item ion-label {
   font-size: 16px;           /* Slightly larger label text */
   font-weight: bold;         /* Bold label text */
   color: #333;               /* Dark grey text for contrast */
@@ -127,17 +150,24 @@ input[type="text"] {
   margin-bottom: 8px;        /* Space below the label */
 }
 
-.given-name input[type="text"] {
+.form-item input[type="text"] {
   width: 100%;               /* Full width of the container */
   padding: 8px;              /* Padding inside the input for ease of typing */
   border: 1px solid #ccc;    /* Subtle border */
   border-radius: 4px;        /* Rounded corners on the input field */
 }
 
-.given-name p {
-  font-size: 14px;           /* Smaller font size for the explanation */
-  color: #666;               /* Lighter grey for less emphasis */
-  margin-top: 5px;           /* Space above the paragraph */
+.form-item p {
+  color: #555;                     /* Darker grey for readability */
+  font-size: 14px;                 /* Standard font size for information text */
+  margin-top: 2px;                 /* Tight spacing to keep related text grouped */
+  line-height: 1.4;                /* Slightly increased line height for readability */
 }
 
-
+.label-applicantminor {
+  font-size: 16px;           /* Slightly larger label text */
+  font-weight: bold;         /* Bold label text */
+  color: #ebf0f5;               /* Dark grey text for contrast */
+  display: block;            /* Ensure the label is a block for better control */
+  margin-bottom: 8px;
+}
