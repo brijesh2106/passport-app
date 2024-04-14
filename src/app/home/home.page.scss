@@ -82,12 +82,59 @@ ion-content {
   }
 
   .signature-upload {
-    border: 2px dashed #28a745;
+    border: 2px dashed #2898a7;
 
     ion-label {
-      color: #28a745; // Custom color for the signature upload label
+      color: #a75728; // Custom color for the signature upload label
     }
   }
+}
+
+/* Container for all upload fields */
+.upload-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Adjust based on your preference: space-between, space-around, etc. */
+  margin-bottom: 20px;
+}
+
+/* Individual upload box styles */
+.image-upload {
+  flex: 1 1 200px; /* Adjust the basis to the minimum width you want each box to shrink to */
+  margin: 10px;
+  padding: 20px;
+  border: 2px dashed #28a745;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.image-upload ion-label {
+  color: #a72868; /* Custom color for the upload label */
+  margin-bottom: 10px; /* Space between label and input field */
+  width: 100%;
+}
+
+.image-upload input[type="file"] {
+  width: 90%; /* Full width but with padding */
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Styling for the paragraph inside the upload box for hints */
+.image-upload p {
+  color: #666;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+/* Styling selected file info */
+.selected-file-info {
+  margin-top: 5px;
+  font-style: italic;
 }
 
 /* Existing styles... */

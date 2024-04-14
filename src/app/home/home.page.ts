@@ -95,12 +95,13 @@ export class HomePage {
   deported: string = '';
   deportationCostRefunded: string = '';
   repatriated: string = '';
-  repatriationCostRefunded: string = '';
-
-
-
-
+  repatriationCostRefunded: string = '';    //photo after
+  aadhaarFileName: string = '';
+  panFileName: string = '';
+  voterIdFileName: string = '';
   
+
+
 
 
 
@@ -119,33 +120,40 @@ export class HomePage {
     this.displayReissueOptions = this.applicationType === 'reissue';
   }
 
-  validateAndUploadFile(event: Event, fileType: 'photo' | 'signature') {
+  validateAndUploadFile(event: Event, fileType: 'photo' | 'signature' | 'aadhaar' | 'pan' | 'voterId') {
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
     if (!file) {
-      this.presentToast(`No ${fileType} selected!`);
+      this.presentToast(`No file selected for ${fileType}!`);
       return;
     }
-
+  
     if (!file.type.match(/image\/(jpg|jpeg|png)/)) {
-      this.presentToast(`Only .JPG, .JPEG and .PNG files are allowed for ${fileType}!`);
+      this.presentToast(`Only .JPG, .JPEG, and .PNG files are allowed for ${fileType}!`);
       return;
     }
-
+  
     if (file.size > 2097152) {
       this.presentToast(`${fileType.toUpperCase()} size must be less than 2MB!`);
       return;
     }
-
+  
     // Update file name properties based on the file type
     if (fileType === 'photo') {
       this.photoFileName = file.name;
     } else if (fileType === 'signature') {
       this.signatureFileName = file.name;
+    } else if (fileType === 'aadhaar') {
+      this.aadhaarFileName = file.name; // You need to add this property
+    } else if (fileType === 'pan') {
+      this.panFileName = file.name; // You need to add this property
+    } else if (fileType === 'voterId') {
+      this.voterIdFileName = file.name; // You need to add this property
     }
-
+  
     this.presentToast(`${fileType.toUpperCase()} is valid and ready to be uploaded!`);
   }
+  
 
   onSubmit(form: NgForm) {
     console.log('Application Type:', this.applicationType);
