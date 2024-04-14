@@ -68,6 +68,37 @@ export class HomePage {
   emergencyMobileNumber: string = '';
   emergencyTelephoneNumber: string = '';
   emergencyEmailId: string = '';
+  passportNumber: string = '';
+  dateOfIssue: string = '';
+  dateOfExpiry: string = '';
+  currentDate: Date = new Date();
+  nextDay: Date = new Date(); 
+  placeOfIssue: string = '';
+  passportNotIssued: string = '';
+  showPassportDetails: boolean = false;
+  fileNumber: string = '';
+  applicationDate: string = '';
+  passportOffice: string = '';
+  pendingProceedings: string = '';
+  pendingWarrantOrSummons: string = '';
+  arrestWarrantIssued: string = '';
+  departureProhibitionOrder: string = '';
+  convictedMoralTurpitude: string = '';
+  refusedPassport: string = '';
+  impoundedPassport: string = '';
+  revokedPassport: string = '';
+  grantedCitizenship: string = '';
+  heldPassport: string = '';
+  surrenderedIndianPassport: string = '';
+  appliedForRenunciation: string = '';
+  returnedOnEC: string = '';
+  deported: string = '';
+  deportationCostRefunded: string = '';
+  repatriated: string = '';
+  repatriationCostRefunded: string = '';
+
+
+
 
   
 

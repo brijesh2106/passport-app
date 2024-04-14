@@ -171,3 +171,11 @@ input[type="text"] {
   display: block;            /* Ensure the label is a block for better control */
   margin-bottom: 8px;
 }
+
+ion-card-title {
+  padding-left: 15px; // Adds slight space to the left, pushing text to the right
+  font-size: 16px;
+  color: #ffffff;
+  padding-top: 20px ;
+  padding-bottom: 20px;
+}

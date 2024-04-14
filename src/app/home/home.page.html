@@ -234,7 +234,7 @@
 
 
 <div class="form-item">
-  <ion-label for="voterId">Voter ID (If available)</ion-label>
+  <ion-label for="voterId">2.10 Voter ID (If available)</ion-label>
   <input type="text" id="voterId" name="voterId" [(ngModel)]="voterId" #voterIdCtrl="ngModel" required 
          pattern="[A-Z]{3}[0-9]{7}" maxlength="10" placeholder="Enter your Voter ID" 
          title="Enter a valid Voter ID (e.g., ABC1234567)">
@@ -608,6 +608,264 @@
 <ion-item>
   <ion-label class="underline-label">(6).PREVIOUS PASSPORT/APPLICATION DETAILS</ion-label>
 </ion-item>
+  
+<ion-card-title>
+  6.1 Details of Latest Held/Existing/Lost/Damaged Ordinary Passport/Identity Certificate
+</ion-card-title>
+
+<div class="form-item">
+  <ion-label for="passportNumber">6.1.1 Previous Passport/Identity Certificate Number</ion-label>
+  <input type="text" id="passportNumber" placeholder="Enter Passport/IC Number" [(ngModel)]="passportNumber" name="passportNumber" #passportNumberCtrl="ngModel"
+         required pattern="[A-Z0-9]*" maxlength="8">
+  <p *ngIf="passportNumberCtrl.errors && passportNumberCtrl.dirty" class="validation-error">
+      * Invalid input. Only uppercase letters and numbers allowed. Maximum 8 characters.
+  </p>
+  <p>* (Previous Passport/IC Number should only contain uppercase letters and numbers; no special characters allowed)</p>
+</div>
+
+<ion-grid>
+  <ion-row>
+    <!-- Date of Issue -->
+    <ion-col size="6">
+      <ion-item>
+        <ion-label position="floating">6.1.2 Date of Issue (DD-MM-YYYY)</ion-label>
+        <ion-datetime display-format="DD MMM YYYY" [(ngModel)]="dateOfIssue" max="{{ currentDate | date: 'yyyy-MM-dd' }}">
+        </ion-datetime>
+      </ion-item>
+    </ion-col>
+
+    <!-- Date of Expiry -->
+    <ion-col size="6">
+      <ion-item>
+        <ion-label position="floating">6.1.3 Date of Expiry (DD-MM-YYYY)</ion-label>
+        <ion-datetime display-format="DD MMM YYYY" [(ngModel)]="dateOfExpiry" min="{{ nextDay | date: 'yyyy-MM-dd' }}">
+        </ion-datetime>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<div class="form-item">
+  <ion-label for="placeOfIssue">6.1.4 Place of Issue</ion-label>
+  <input type="text" id="placeOfIssue" placeholder="Enter Place of Issue" [(ngModel)]="placeOfIssue" name="placeOfIssue" #placeOfIssueCtrl="ngModel"
+         required pattern="[A-Z]*" maxlength="25">
+  <p *ngIf="placeOfIssueCtrl.errors && placeOfIssueCtrl.dirty" class="validation-error">
+    * Invalid input. Only uppercase letters are allowed. Maximum 25 characters.
+  </p>
+  <p>* (Place of Issue should only contain uppercase letters, no numbers or special characters allowed)</p>
+</div>
+
+<!-- Dropdown for 6.2: Have you ever applied for a passport, but not issued? -->
+<ion-item>
+  <ion-label>6.2 Have you ever applied for a passport, but not issued?</ion-label>
+  <ion-select placeholder="Select Yes or No" interface="popover" [(ngModel)]="passportNotIssued">
+    <ion-select-option value="yes">Yes</ion-select-option>
+    <ion-select-option value="no">No</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<!-- Conditional fields based on the dropdown selection using ngIf directly in HTML -->
+<div *ngIf="passportNotIssued === 'yes'">
+  <div class="form-item">
+    <ion-label for="fileNumber">6.2.1 File Number</ion-label>
+    <input type="text" id="fileNumber" placeholder="Enter File Number" [(ngModel)]="fileNumber"
+           required pattern="[A-Z0-9-!@#$%^&*()_+=]*" maxlength="30">
+  </div>
+
+  <div class="form-item">
+    <ion-label for="applicationDate">6.2.2 Month and Year of Applying</ion-label>
+    <input type="text" id="applicationDate" placeholder="MM/YYYY" [(ngModel)]="applicationDate"
+           required pattern="[0-9/-]*" maxlength="7">
+  </div>
+
+  <div class="form-item">
+    <ion-label for="passportOffice">6.2.3 Name of Passport Office Where Applied</ion-label>
+    <input type="text" id="passportOffice" placeholder="Enter Passport Office" [(ngModel)]="passportOffice"
+           required pattern="[A-Z0-9-!@#$%^&*()_+=]*" maxlength="90">
+  </div>
+</div>
+
+<ion-item>
+  <ion-label class="underline-label">(7).OTHER DETAILS</ion-label>
+</ion-item>
+
+<ion-card-title>
+  7.1 Provide the following details if there are any criminal proceedings pending against the applicant :
+</ion-card-title>
+
+<div class="form-item">
+  <ion-label for="pendingProceedings">7.1.1 Are any proceedings in respect of an offence alleged to have been committed by you pending before a criminal court in India?</ion-label>
+  <select id="pendingProceedings" [(ngModel)]="pendingProceedings">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="pendingWarrantOrSummons">7.1.2 Has any warrant or summons for your appearance been issued & pending before a court?</ion-label>
+  <select id="pendingWarrantOrSummons" [(ngModel)]="pendingWarrantOrSummons">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="arrestWarrantIssued">7.1.3 Has a warrant for your arrest been issued by a court?</ion-label>
+  <select id="arrestWarrantIssued" [(ngModel)]="arrestWarrantIssued">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="departureProhibitionOrder">7.1.4 Has an order prohibiting your departure from India been made by any court?</ion-label>
+  <select id="departureProhibitionOrder" [(ngModel)]="departureProhibitionOrder">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<ion-card-title>
+  7.2 Provide the following details if the applicant has been convicted by a court in India :
+</ion-card-title>
+
+<div class="form-item">
+  <ion-label for="convictedMoralTurpitude">7.2.1 Have you, at any time during the period of five years immediately preceding the date of this application, been convicted by a court in India for any offence involving moral turpitude and sentenced in respect thereof to imprisonment for not less than two years?</ion-label>
+  <select id="convictedMoralTurpitude" [(ngModel)]="convictedMoralTurpitude">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<ion-card-title>
+  7.3 Provide the following details if the applicant has been refused/denied passport :
+</ion-card-title>
+
+<div class="form-item">
+  <ion-label for="refusedPassport">7.3.1 Have you ever been refused/denied passport?</ion-label>
+  <select id="refusedPassport" [(ngModel)]="refusedPassport">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="impoundedPassport">7.3.2 Has your passport ever been impounded?</ion-label>
+  <select id="impoundedPassport" [(ngModel)]="impoundedPassport">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="revokedPassport">7.3.3 Has your passport ever been revoked?</ion-label>
+  <select id="revokedPassport" [(ngModel)]="revokedPassport">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<ion-card-title>
+  7.4 Provide the following details if applicant has applied for or been granted foreign citizenship :
+</ion-card-title>
+
+<div class="form-item">
+  <ion-label for="grantedCitizenship">7.4.1 Have you ever been granted citizenship by any other region/country?</ion-label>
+  <select id="grantedCitizenship" [(ngModel)]="grantedCitizenship">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="heldPassport">7.4.2 Have you ever held the passport of any other region/country at any time?</ion-label>
+  <select id="heldPassport" [(ngModel)]="heldPassport">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="surrenderedIndianPassport">7.4.3 Have you ever surrendered your Indian passport?</ion-label>
+  <select id="surrenderedIndianPassport" [(ngModel)]="surrenderedIndianPassport">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="appliedForRenunciation">7.4.4 Have you ever applied for renunciation of Indian citizenship?</ion-label>
+  <select id="appliedForRenunciation" [(ngModel)]="appliedForRenunciation">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<ion-card-title>
+  7.5 Provide the following details if applicant has returned to India on Emergency Certificate :
+</ion-card-title>
+
+<div class="form-item">
+  <ion-label for="returnedOnEC">7.5.1 Have you ever returned to India on Emergency Certificate (EC)?</ion-label>
+  <select id="returnedOnEC" [(ngModel)]="returnedOnEC">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="deported">7.5.2 Have you ever been deported from any country?</ion-label>
+  <select id="deported" [(ngModel)]="deported" (ngModelChange)="deported = $event">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item" *ngIf="deported === 'yes'">
+  <ion-label for="deportationCostRefunded">7.5.2.1 If yes, was the cost borne by the Government of India and if so, has the same been refunded?</ion-label>
+  <select id="deportationCostRefunded" [(ngModel)]="deportationCostRefunded">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item">
+  <ion-label for="repatriated">7.5.3 Have you ever been repatriated from any country back to India?</ion-label>
+  <select id="repatriated" [(ngModel)]="repatriated" (ngModelChange)="repatriated = $event">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+<div class="form-item" *ngIf="repatriated === 'yes'">
+  <ion-label for="repatriationCostRefunded">7.5.3.1 If yes, was the cost borne by the Government of India and if so, has the same been refunded?</ion-label>
+  <select id="repatriationCostRefunded" [(ngModel)]="repatriationCostRefunded">
+    <option value="">Select Yes or No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+</div>
+
+
+
+
+   
 
 
 
