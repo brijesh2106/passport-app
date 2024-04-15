@@ -109,11 +109,6 @@ export class HomePage {
   dateOfApply: string = '';
 
   
-
-
-
-
-
   constructor(private toastController: ToastController) {}
 
   async presentToast(message: string) {
