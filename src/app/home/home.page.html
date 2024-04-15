@@ -876,6 +876,89 @@
   </select>
 </div>
 
+<ion-item>
+  <ion-label class="underline-label">(9).ENCLOSURES (Please select the uploaded documents)</ion-label>
+</ion-item>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="auto">
+      <ion-item lines="none">
+        <ion-label>Photo</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="isPhotoChecked"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-item lines="none">
+        <ion-label>Signature/Thumb Impression</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="isSignatureChecked"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-item lines="none">
+        <ion-label>Aadhaar</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="isAadhaarChecked"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-item lines="none">
+        <ion-label>PAN</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="isPANChecked"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-item lines="none">
+        <ion-label>VoterID</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="isVoterIDChecked"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-item>
+  <ion-label class="underline-label">(10).SELF DECLARATION</ion-label>
+</ion-item>
+<ion-card-title>
+I owe allegiance to the sovereignty, unity & integrity of India, and have not voluntarily acquired citizenship or
+travel document of any other country. I have not lost, surrendered or been deprived of the citizenship of India.
+I have not contravened any of the conditions relating to the possession and use of an Indian passport.
+I affirm that the information and particulars given by me in this form are true and correct. I further state that I
+am not suppressing any material information in this regard. I further affirm that the enclosures and documentary
+proof submitted in support of my application for an Indian passport are authentic and solely pertain to me and
+I am fully responsible for the accuracy of the same. I am liable to be penalized or prosecuted if found otherwise.
+I am aware that under the Passports Act, 1967 it is a criminal offence to furnish any false information or to
+suppress any material information with a view to obtaining passport or travel document.
+I have read and understood the contents of the above and by submitting this form certify that all the information
+submitted by me in the form is bonafide.
+</ion-card-title>
+
+<div style="display: flex; justify-content: space-around;">
+   <!-- Self Declaration Place Input (10.1) -->
+  <div class="form-item">
+    <ion-label for="selfDeclarationPlace">10.1 Self Declaration Place</ion-label>
+    <input type="text" id="selfDeclarationPlace" placeholder="Enter Place" [(ngModel)]="selfDeclarationPlace" name="selfDeclarationPlace" #selfDeclarationPlaceCtrl="ngModel"
+           required pattern="[A-Z]*" maxlength="30">
+    <p *ngIf="selfDeclarationPlaceCtrl.errors && (selfDeclarationPlaceCtrl.dirty || selfDeclarationPlaceCtrl.touched)" class="validation-error">
+        * Invalid input. Only uppercase letters are allowed. Maximum 30 characters.
+    </p>
+    <p>* (Place should only contain uppercase letters, no numbers or special characters allowed)</p>
+  </div>
+  <!-- Self Declaration Signature/Thumb Impression Upload (10.2) -->
+  <div class="image-upload">
+    <ion-label>10.2 Self Declaration Signature/Thumb Impression of Applicant (If applicant is minor, either parent to sign)</ion-label>
+    <input type="file" (change)="validateAndUploadFile($event, 'selfDeclaration')" accept=".jpg, .jpeg, .png">
+    <p>* Please upload scanned Signature/ Left Hand Thumb Impression photograph of Illiterate Applicant and Minors who cannot sign. Upload Max. Filesize – 2MB. Upload Only .JPG, .JPEG and .PNG Format.</p>
+    <!-- Display selfDeclaration file name -->
+    <p *ngIf="selfDeclarationFileName">Selected file: {{ selfDeclarationFileName }}</p>
+  </div>
+</div>
+
+<ion-item>
+  <ion-label position="floating">6.1.3 Date of Apply (DD-MM-YYYY)</ion-label>
+  <ion-datetime display-format="DD-MMM-YYYY" [(ngModel)]="dateOfApply" min="{{ today | date: 'yyyy-MM-dd' }}" max="{{ today | date: 'yyyy-MM-dd' }}"></ion-datetime>
+</ion-item>
+
+
 
 
 

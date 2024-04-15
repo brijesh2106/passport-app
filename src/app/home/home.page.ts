@@ -99,6 +99,15 @@ export class HomePage {
   aadhaarFileName: string = '';
   panFileName: string = '';
   voterIdFileName: string = '';
+  isPhotoChecked: boolean = false;
+  isSignatureChecked: boolean = false;
+  isAadhaarChecked: boolean = false;
+  isPANChecked: boolean = false;
+  isVoterIDChecked: boolean = false;
+  selfDeclarationPlace: string = '';
+  selfDeclarationFileName: string = '';
+  dateOfApply: string = '';
+
   
 
 
@@ -120,7 +129,7 @@ export class HomePage {
     this.displayReissueOptions = this.applicationType === 'reissue';
   }
 
-  validateAndUploadFile(event: Event, fileType: 'photo' | 'signature' | 'aadhaar' | 'pan' | 'voterId') {
+  validateAndUploadFile(event: Event, fileType: 'photo' | 'signature' | 'aadhaar' | 'pan' | 'voterId' | 'selfDeclaration') {
     const element = event.target as HTMLInputElement;
     const file = element.files ? element.files[0] : null;
     if (!file) {
@@ -138,17 +147,26 @@ export class HomePage {
       return;
     }
   
-    // Update file name properties based on the file type
-    if (fileType === 'photo') {
-      this.photoFileName = file.name;
-    } else if (fileType === 'signature') {
-      this.signatureFileName = file.name;
-    } else if (fileType === 'aadhaar') {
-      this.aadhaarFileName = file.name; // You need to add this property
-    } else if (fileType === 'pan') {
-      this.panFileName = file.name; // You need to add this property
-    } else if (fileType === 'voterId') {
-      this.voterIdFileName = file.name; // You need to add this property
+    // Assign file name based on file type
+    switch (fileType) {
+      case 'photo':
+        this.photoFileName = file.name;
+        break;
+      case 'signature':
+        this.signatureFileName = file.name;
+        break;
+      case 'aadhaar':
+        this.aadhaarFileName = file.name;
+        break;
+      case 'pan':
+        this.panFileName = file.name;
+        break;
+      case 'voterId':
+        this.voterIdFileName = file.name;
+        break;
+      case 'selfDeclaration':
+        this.selfDeclarationFileName = file.name; // Ensures handling for selfDeclaration
+        break;
     }
   
     this.presentToast(`${fileType.toUpperCase()} is valid and ready to be uploaded!`);
